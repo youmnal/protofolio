@@ -6,7 +6,7 @@
 <title>Youmna Ehab — Data Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#12181B;
@@ -19,7 +19,7 @@
     --amber:#E3A857;
     --line:#2A3338;
     --line-soft:#232A2E;
-    --radius:3px;
+    --radius:6px;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -33,129 +33,203 @@
     -webkit-font-smoothing:antialiased;
   }
   ::selection{background:var(--teal);color:#0C1213;}
-
   a{color:var(--teal);text-decoration:none;}
   a:hover{text-decoration:underline;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--teal);outline-offset:3px;}
-
-  h1,h2,h3{
-    font-family:'Space Grotesk',sans-serif;
-    font-weight:600;
-    margin:0;
-    color:var(--ink);
-  }
-
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;font-weight:600;margin:0;color:var(--ink);}
   .mono{font-family:'IBM Plex Mono',monospace;}
+  img,svg{max-width:100%;}
 
-  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+  .wrap-narrow{max-width:820px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- Motion ---------- */
+  @keyframes pulse-dot{
+    0%,100%{box-shadow:0 0 0 0 rgba(227,168,87,0.45);}
+    50%{box-shadow:0 0 0 7px rgba(227,168,87,0);}
+  }
+  @keyframes fade-up{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes marquee-scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease;}
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
+
+  .hover-lift{transition:transform 0.25s ease,border-color 0.25s ease,background 0.25s ease,box-shadow 0.25s ease;}
+  .hover-lift:hover{transform:translateY(-3px);border-color:var(--teal);box-shadow:0 10px 24px -14px rgba(95,195,180,0.4);}
+
+  .skill-group li{transition:transform 0.18s ease,border-color 0.18s ease,color 0.18s ease;}
+  .skill-group li:hover{transform:translateY(-1px) scale(1.04);border-color:var(--teal);color:var(--teal);}
+
+  .cert-list li{transition:padding-left 0.2s ease,border-color 0.2s ease;}
+  .cert-list li:hover{padding-left:6px;}
+  .cert-list li:hover .cert-name{color:var(--teal);}
+
+  .project .stack span{transition:transform 0.18s ease,background 0.18s ease;}
+  .project:hover .stack span{background:rgba(95,195,180,0.08);}
+  .project:hover .proj-num{color:var(--teal);}
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
+  }
 
   /* ---------- Header / nav ---------- */
   header.top{
-    position:sticky;top:0;z-index:20;
+    position:sticky;top:0;z-index:30;
     background:rgba(18,24,27,0.92);
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line-soft);
   }
   .topbar{
-    max-width:760px;margin:0 auto;padding:14px 24px;
+    max-width:1040px;margin:0 auto;padding:16px 24px;
     display:flex;justify-content:space-between;align-items:center;
   }
-  .topbar .name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;}
-  .topbar nav{display:flex;gap:20px;font-size:14px;}
+  .topbar .name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.01em;}
+  .topbar nav{display:flex;gap:22px;font-size:14px;align-items:center;}
   .topbar nav a{color:var(--ink-dim);}
   .topbar nav a:hover{color:var(--teal);text-decoration:none;}
-  @media (max-width:560px){
-    .topbar nav{gap:13px;font-size:12.5px;}
+  .topbar .nav-cta{
+    border:1px solid var(--teal);color:var(--teal) !important;
+    padding:7px 14px;border-radius:var(--radius);font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+  }
+  .topbar .nav-cta:hover{background:var(--teal);color:#0C1213 !important;text-decoration:none;}
+  @media (max-width:640px){
+    .topbar nav a:not(.nav-cta){display:none;}
+    .topbar nav{gap:10px;}
   }
 
   /* ---------- Hero ---------- */
-  .hero{padding:64px 0 40px;}
+  .hero{padding:88px 0 56px;position:relative;overflow:hidden;}
+  .hero::before{
+    content:"";position:absolute;top:-160px;right:-180px;width:520px;height:520px;
+    background:radial-gradient(circle,rgba(95,195,180,0.16),transparent 68%);
+    pointer-events:none;z-index:-1;
+  }
+  .hero::after{
+    content:"";position:absolute;bottom:-200px;left:-160px;width:420px;height:420px;
+    background:radial-gradient(circle,rgba(227,168,87,0.10),transparent 70%);
+    pointer-events:none;z-index:-1;
+  }
+  .hero .name-display{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(22px,3.2vw,30px);color:var(--ink);letter-spacing:-0.01em;
+    margin-bottom:14px;
+  }
   .hero .role-tag{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:13px;color:var(--amber);
-    display:flex;align-items:center;gap:8px;margin-bottom:18px;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--amber);
+    display:inline-flex;align-items:center;gap:8px;margin-bottom:22px;
+    border:1px solid rgba(227,168,87,0.3);padding:6px 12px;border-radius:99px;
   }
-  .hero .role-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);}
-  .hero h1{font-size:clamp(32px,6vw,46px);line-height:1.15;letter-spacing:-0.01em;max-width:11ch;}
-  .hero p.tagline{
-    margin-top:18px;color:var(--ink-dim);font-size:17px;max-width:52ch;
+  .hero .role-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);animation:pulse-dot 2.2s ease-in-out infinite;}
+  .hero h1{
+    font-size:clamp(38px,7vw,64px);line-height:1.06;letter-spacing:-0.02em;max-width:13ch;font-weight:700;
   }
+  .hero h1 .accent{color:var(--teal);}
+  .hero p.tagline{margin-top:22px;color:var(--ink-dim);font-size:18px;max-width:54ch;}
+  .hero .hero-actions{margin-top:32px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+  .hire-cta{
+    display:inline-block;padding:13px 24px;background:var(--teal);color:#0C1213;
+    font-weight:700;font-size:14.5px;border-radius:var(--radius);font-family:'Space Grotesk',sans-serif;
+    transition:transform 0.2s ease,box-shadow 0.2s ease;
+  }
+  .hire-cta:hover{text-decoration:none;transform:translateY(-2px);box-shadow:0 12px 24px -12px rgba(95,195,180,0.5);}
+  .secondary-cta{
+    font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--ink-dim);
+    border:1px solid var(--line);padding:12px 22px;border-radius:var(--radius);
+    transition:border-color 0.2s ease,color 0.2s ease;
+  }
+  .secondary-cta:hover{border-color:var(--teal);color:var(--teal);text-decoration:none;}
   .hero .contact-line{
-    margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-faint);
-    display:flex;flex-wrap:wrap;gap:6px 14px;
+    margin-top:28px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink-faint);
+    display:flex;flex-wrap:wrap;gap:6px 16px;
   }
   .hero .contact-line a{color:var(--ink-dim);}
   .hero .contact-line a:hover{color:var(--teal);}
-  .stats-strip{
-    margin-top:28px;display:flex;gap:0;border:1px solid var(--line-soft);
-  }
-  .stat{flex:1;padding:14px 16px;border-right:1px solid var(--line-soft);}
+  .stats-strip{margin-top:40px;display:flex;gap:0;border:1px solid var(--line-soft);border-radius:var(--radius);overflow:hidden;}
+  .stat{flex:1;padding:16px 18px;border-right:1px solid var(--line-soft);}
   .stat:last-child{border-right:none;}
-  .stat-num{display:block;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;color:var(--teal);}
+  .stat-num{display:block;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;color:var(--teal);}
   .stat-label{display:block;margin-top:3px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-faint);}
-  @media (max-width:560px){
+  @media (max-width:640px){
     .stats-strip{flex-direction:column;}
     .stat{border-right:none;border-bottom:1px solid var(--line-soft);}
     .stat:last-child{border-bottom:none;}
   }
-  .hire-cta{
-    display:inline-block;margin-top:22px;padding:11px 20px;
-    background:var(--teal);color:#0C1213;font-weight:600;font-size:14px;
-    border-radius:var(--radius);font-family:'Space Grotesk',sans-serif;
-  }
-  .hire-cta:hover{text-decoration:none;opacity:0.9;}
 
   /* ---------- ETL pipeline diagram ---------- */
-  .pipeline{margin-top:44px;}
+  .pipeline{margin-top:52px;}
   .pipeline svg{width:100%;height:auto;display:block;}
-  .stage-label{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:var(--ink-faint);}
-  .stage-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600;fill:var(--ink);}
-  .stage-item{font-family:'IBM Plex Sans',sans-serif;font-size:11px;fill:var(--ink-dim);}
+
+  /* ---------- Marquee ---------- */
+  .marquee-strip{
+    border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+    background:var(--bg-panel);padding:16px 0;overflow:hidden;white-space:nowrap;
+  }
+  .marquee-track{display:inline-flex;animation:marquee-scroll 26s linear infinite;}
+  .marquee-track span{
+    font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--ink-dim);
+    padding:0 22px;display:inline-flex;align-items:center;gap:22px;white-space:nowrap;
+  }
+  .marquee-track span .sep{color:var(--teal);}
 
   /* ---------- Section shell ---------- */
-  section{padding:52px 0;border-top:1px solid var(--line-soft);}
-  section .section-head{
-    display:flex;align-items:baseline;gap:12px;margin-bottom:28px;
-  }
-  section .section-head .idx{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-faint);}
-  section .section-head h2{font-size:22px;}
+  section.block{padding:60px 0;border-top:1px solid var(--line-soft);}
+  .section-head{display:flex;align-items:baseline;gap:12px;margin-bottom:30px;}
+  .section-head .idx{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-faint);}
+  .section-head h2{font-size:26px;}
 
   /* ---------- About ---------- */
-  #about p{color:var(--ink-dim);max-width:64ch;font-size:15.5px;}
+  #about p{color:var(--ink-dim);max-width:66ch;font-size:15.5px;}
   #about p + p{margin-top:14px;}
 
   /* ---------- Skills ---------- */
-  .skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+  .skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+  @media (max-width:800px){.skill-grid{grid-template-columns:1fr 1fr;}}
   @media (max-width:560px){.skill-grid{grid-template-columns:1fr;}}
-  .skill-group{
-    padding:16px 18px;border:1px solid var(--line-soft);margin:-1px -1px 0 0;
-  }
-  .skill-group h3{
-    font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
-    color:var(--amber);margin-bottom:10px;
-  }
+  .skill-group{padding:18px 18px;border:1px solid var(--line-soft);margin:-1px -1px 0 0;border-radius:var(--radius);}
+  .skill-group h3{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;color:var(--amber);margin-bottom:10px;}
   .skill-group ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:7px;}
   .skill-group li{
     font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);
-    border:1px solid var(--line);padding:4px 9px;border-radius:var(--radius);
+    border:1px solid var(--line);padding:4px 9px;border-radius:4px;
   }
 
-  /* ---------- Projects ---------- */
-  .project{
-    padding:24px 0;border-top:1px solid var(--line-soft);
+  /* ---------- CTA banner (full bleed) ---------- */
+  .cta-banner{
+    background:linear-gradient(120deg,var(--teal),#4AA99B);
+    color:#0C1213;padding:56px 0;
   }
+  .cta-banner .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px;}
+  .cta-banner h2{font-size:clamp(24px,4vw,32px);color:#0C1213;max-width:22ch;font-weight:700;}
+  .cta-banner p{margin:6px 0 0;color:rgba(12,18,19,0.72);font-size:14.5px;}
+  .cta-banner .btn-dark{
+    background:#0C1213;color:var(--teal);padding:13px 24px;border-radius:var(--radius);
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14.5px;white-space:nowrap;
+    transition:transform 0.2s ease;
+  }
+  .cta-banner .btn-dark:hover{transform:translateY(-2px);text-decoration:none;}
+
+  /* ---------- Projects ---------- */
+  .project{padding:30px 0;border-top:1px solid var(--line-soft);display:flex;gap:22px;}
   .project:first-of-type{border-top:none;padding-top:0;}
+  .proj-num{
+    font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:var(--line);
+    min-width:56px;transition:color 0.25s ease;
+  }
+  .project-body{flex:1;min-width:0;}
   .project-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;}
-  .project h3{font-size:18px;}
+  .project h3{font-size:19px;}
   .project .kind{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-faint);white-space:nowrap;padding-top:4px;}
-  .project p.desc{color:var(--ink-dim);margin:10px 0 0;font-size:15px;max-width:60ch;}
-  .project .stack{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;}
+  .project p.desc{color:var(--ink-dim);margin:10px 0 0;font-size:15px;max-width:62ch;}
+  .project .stack{margin-top:13px;display:flex;flex-wrap:wrap;gap:6px;}
   .project .stack span{
     font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--teal);
-    border:1px solid rgba(95,195,180,0.3);padding:2px 8px;border-radius:var(--radius);
+    border:1px solid rgba(95,195,180,0.3);padding:2px 8px;border-radius:4px;
   }
-  .project .metric{
-    margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--amber);
+  .project .metric{margin-top:13px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--amber);}
+  @media (max-width:560px){
+    .project{gap:14px;}
+    .proj-num{font-size:20px;min-width:32px;}
   }
 
   /* ---------- Education / certs ---------- */
@@ -166,10 +240,7 @@
   .edu-row .right{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink-faint);white-space:nowrap;padding-top:2px;}
 
   .cert-list{list-style:none;margin:0;padding:0;}
-  .cert-list li{
-    padding:11px 0;border-top:1px solid var(--line-soft);
-    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14.5px;
-  }
+  .cert-list li{padding:11px 0;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14.5px;}
   .cert-list li:first-child{border-top:none;}
   .cert-list .cert-name{color:var(--ink);}
   .cert-list .cert-org{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-faint);}
@@ -180,17 +251,11 @@
   .lang-item .lang-level{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-faint);margin-top:2px;}
 
   /* ---------- Footer ---------- */
-  footer{padding:40px 0 60px;border-top:1px solid var(--line-soft);}
-  footer .cta{
-    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
-  }
-  footer h2{font-size:22px;max-width:16ch;}
+  footer{padding:48px 0 64px;border-top:1px solid var(--line-soft);}
+  footer .cta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  footer h2{font-size:24px;max-width:16ch;}
   footer .links{display:flex;gap:18px;font-family:'IBM Plex Mono',monospace;font-size:13.5px;}
   footer .copyline{margin-top:36px;color:var(--ink-faint);font-size:12.5px;font-family:'IBM Plex Mono',monospace;}
-
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-  }
 </style>
 </head>
 <body>
@@ -203,164 +268,193 @@
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
       <a href="#education">Education</a>
+      <a class="nav-cta" href="mailto:youmnae53@gmail.com?subject=Data%20Engineer%20role">Hire me</a>
     </nav>
   </div>
 </header>
 
-<div class="wrap">
-
-  <!-- HERO -->
-  <section class="hero" style="border-top:none;padding-top:64px;">
-    <div class="role-tag"><span class="dot"></span>Open to full-time Data Engineering / ETL roles — available immediately</div>
-    <h1>Turning raw data into systems people can trust.</h1>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="name-display">Youmna Ehab Elshahat Afify</div>
+    <div class="role-tag"><span class="dot"></span>Open to full-time Data Engineering / ETL roles</div>
+    <h1>Turning raw data into systems people can <span class="accent">trust</span>.</h1>
     <p class="tagline">Computer Science &amp; AI graduate (Very Good) who builds the pipelines underneath — from messy medical imaging datasets to production ETL and BI dashboards.</p>
+
+    <div class="hero-actions">
+      <a class="hire-cta" href="mailto:youmnae53@gmail.com?subject=Data%20Engineer%20role">Hire me — get in touch →</a>
+      <a class="secondary-cta" href="#projects">See the work</a>
+    </div>
+
     <div class="contact-line">
       <span>Benha, Egypt</span>
       <a href="mailto:youmnae53@gmail.com">youmnae53@gmail.com</a>
-      <a href="tel:+20104306142">+20 104306142</a>
+      <a href="tel:+201094306142">+20 1094306142</a>
       <a href="https://linkedin.com/in/youmna-ehab" target="_blank" rel="noopener">linkedin.com/in/youmna-ehab</a>
       <a href="https://github.com/youmnal" target="_blank" rel="noopener">github.com/youmnal</a>
     </div>
+
     <div class="stats-strip">
-      <div class="stat"><span class="stat-num">Very Good</span><span class="stat-label">CS &amp; AI degree, 2026</span></div>
-      <div class="stat"><span class="stat-num">5</span><span class="stat-label">end-to-end data / ML projects</span></div>
-      <div class="stat"><span class="stat-num">7</span><span class="stat-label">certifications, incl. Power BI</span></div>
+      <div class="stat hover-lift"><span class="stat-num">Very Good</span><span class="stat-label">CS &amp; AI degree, 2026</span></div>
+      <div class="stat hover-lift"><span class="stat-num" data-count="5">5</span><span class="stat-label">end-to-end data / ML projects</span></div>
+      <div class="stat hover-lift"><span class="stat-num" data-count="7">7</span><span class="stat-label">certifications, incl. Power BI</span></div>
     </div>
-    <a class="hire-cta" href="mailto:youmnae53@gmail.com?subject=Data%20Engineer%20role">Hire me — email youmnae53@gmail.com →</a>
 
     <div class="pipeline">
       <svg viewBox="0 0 700 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Extract, transform, load pipeline showing raw data, cleaning and modeling, and delivered insight">
-        <!-- connecting line -->
         <line x1="90" y1="75" x2="610" y2="75" stroke="#2A3338" stroke-width="1.5" stroke-dasharray="3 4"/>
-        <!-- arrow heads -->
+        <circle r="3" fill="#5FC3B4">
+          <animateMotion dur="3.2s" repeatCount="indefinite" path="M124,75 L576,75" />
+          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.08;0.85;1" dur="3.2s" repeatCount="indefinite"/>
+        </circle>
+        <circle r="3" fill="#E3A857">
+          <animateMotion dur="3.2s" begin="1.1s" repeatCount="indefinite" path="M124,75 L576,75" />
+          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.08;0.85;1" dur="3.2s" begin="1.1s" repeatCount="indefinite"/>
+        </circle>
+        <circle r="3" fill="#5FC3B4">
+          <animateMotion dur="3.2s" begin="2.2s" repeatCount="indefinite" path="M124,75 L576,75" />
+          <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.08;0.85;1" dur="3.2s" begin="2.2s" repeatCount="indefinite"/>
+        </circle>
         <path d="M228 75 L238 71 L238 79 Z" fill="#5E6B67"/>
         <path d="M468 75 L478 71 L478 79 Z" fill="#5E6B67"/>
 
-        <!-- Stage 1: Extract -->
         <circle cx="90" cy="75" r="34" fill="none" stroke="#5FC3B4" stroke-width="1.5"/>
-        <text x="90" y="80" text-anchor="middle" class="stage-title" fill="#5FC3B4">E</text>
-        <text x="90" y="128" text-anchor="middle" class="stage-label">extract</text>
-        <text x="90" y="143" text-anchor="middle" class="stage-item">scans · SQL · CSV</text>
+        <text x="90" y="80" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#5FC3B4">E</text>
+        <text x="90" y="128" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5E6B67">extract</text>
+        <text x="90" y="143" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A19C">scans · SQL · CSV</text>
 
-        <!-- Stage 2: Transform -->
         <circle cx="350" cy="75" r="34" fill="none" stroke="#E3A857" stroke-width="1.5"/>
-        <text x="350" y="80" text-anchor="middle" class="stage-title" fill="#E3A857">T</text>
-        <text x="350" y="128" text-anchor="middle" class="stage-label">transform</text>
-        <text x="350" y="143" text-anchor="middle" class="stage-item">clean · model · validate</text>
+        <text x="350" y="80" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#E3A857">T</text>
+        <text x="350" y="128" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5E6B67">transform</text>
+        <text x="350" y="143" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A19C">clean · model · validate</text>
 
-        <!-- Stage 3: Load -->
         <circle cx="610" cy="75" r="34" fill="none" stroke="#5FC3B4" stroke-width="1.5"/>
-        <text x="610" y="80" text-anchor="middle" class="stage-title" fill="#5FC3B4">L</text>
-        <text x="610" y="128" text-anchor="middle" class="stage-label">load</text>
-        <text x="610" y="143" text-anchor="middle" class="stage-item">dashboard · report · API</text>
+        <text x="610" y="80" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="14" font-weight="600" fill="#5FC3B4">L</text>
+        <text x="610" y="128" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#5E6B67">load</text>
+        <text x="610" y="143" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#93A19C">dashboard · report · API</text>
       </svg>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section id="about">
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>SQL <span class="sep">·</span> Python <span class="sep">·</span> ETL <span class="sep">·</span> Power BI <span class="sep">·</span> MongoDB <span class="sep">·</span> TensorFlow <span class="sep">·</span> FastAPI <span class="sep">·</span> React <span class="sep">·</span> Data Modeling <span class="sep">·</span> Deep Learning <span class="sep">·</span></span>
+    <span>SQL <span class="sep">·</span> Python <span class="sep">·</span> ETL <span class="sep">·</span> Power BI <span class="sep">·</span> MongoDB <span class="sep">·</span> TensorFlow <span class="sep">·</span> FastAPI <span class="sep">·</span> React <span class="sep">·</span> Data Modeling <span class="sep">·</span> Deep Learning <span class="sep">·</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="block reveal">
+  <div class="wrap">
     <div class="section-head"><span class="idx mono">01</span><h2>About</h2></div>
     <p>I graduated in Computer Science and Artificial Intelligence from Ahram Canadian University with a Very Good grade, having spent the degree gravitating toward the layer underneath the model: how the data gets there, and whether it can be trusted once it arrives.</p>
     <p>That's shown up as ML/DL pipelines on medical imaging data, relational and document databases (SQL, MongoDB), and Power BI dashboards that turn transformed data into something a non-technical reader can act on. I'm now looking to bring that data-handling background to ETL development and data integration work inside a BI environment.</p>
-  </section>
+  </div>
+</section>
 
-  <!-- SKILLS -->
-  <section id="skills">
+<!-- SKILLS -->
+<section id="skills" class="block reveal">
+  <div class="wrap">
     <div class="section-head"><span class="idx mono">02</span><h2>Skills</h2></div>
     <div class="skill-grid">
-      <div class="skill-group">
+      <div class="skill-group hover-lift">
         <h3>data &amp; databases</h3>
-        <ul>
-          <li>SQL</li><li>MongoDB</li><li>Data Modeling</li><li>ETL Concepts</li><li>Data Cleaning &amp; Transformation</li>
-        </ul>
+        <ul><li>SQL</li><li>MongoDB</li><li>Data Modeling</li><li>ETL Concepts</li><li>Data Cleaning &amp; Transformation</li></ul>
       </div>
-      <div class="skill-group">
+      <div class="skill-group hover-lift">
         <h3>BI &amp; analytics</h3>
-        <ul>
-          <li>Power BI (Certified)</li><li>Data Science</li><li>Data Analysis</li>
-        </ul>
+        <ul><li>Power BI (Certified)</li><li>Data Science</li><li>Data Analysis</li></ul>
       </div>
-      <div class="skill-group">
+      <div class="skill-group hover-lift">
         <h3>AI / ML pipelines</h3>
-        <ul>
-          <li>Machine Learning</li><li>Deep Learning</li><li>TensorFlow</li><li>End-to-end pipelines</li>
-        </ul>
+        <ul><li>Machine Learning</li><li>Deep Learning</li><li>TensorFlow</li><li>End-to-end pipelines</li></ul>
       </div>
-      <div class="skill-group">
+      <div class="skill-group hover-lift">
         <h3>programming</h3>
-        <ul>
-          <li>Python</li><li>C++</li><li>C#</li><li>JavaScript</li>
-        </ul>
+        <ul><li>Python</li><li>C++</li><li>C#</li><li>JavaScript</li></ul>
       </div>
-      <div class="skill-group">
+      <div class="skill-group hover-lift">
         <h3>web / backend</h3>
-        <ul>
-          <li>FastAPI</li><li>React.js</li><li>Vue.js</li>
-        </ul>
+        <ul><li>FastAPI</li><li>React.js</li><li>Vue.js</li></ul>
       </div>
-      <div class="skill-group">
+      <div class="skill-group hover-lift">
         <h3>tools</h3>
-        <ul>
-          <li>Git / GitHub</li><li>Jupyter</li><li>Google Colab</li><li>VS Code</li>
-        </ul>
+        <ul><li>Git / GitHub</li><li>Jupyter</li><li>Google Colab</li><li>VS Code</li></ul>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
+<!-- CTA BANNER -->
+<div class="cta-banner reveal">
+  <div class="wrap">
+    <div>
+      <h2>Open to full-time Data Engineering opportunities.</h2>
+      <p>Available immediately · Benha, Egypt · open to remote</p>
+    </div>
+    <a class="btn-dark" href="mailto:youmnae53@gmail.com?subject=Data%20Engineer%20role">Get in touch →</a>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects" class="block reveal">
+  <div class="wrap">
     <div class="section-head"><span class="idx mono">03</span><h2>Projects</h2></div>
 
-    <div class="project">
-      <div class="project-head">
-        <h3>Aeye — AI-Powered Eye Disease Diagnosis</h3>
-        <span class="kind">graduation project</span>
+    <div class="project hover-lift">
+      <div class="proj-num">01</div>
+      <div class="project-body">
+        <div class="project-head"><h3>Aeye — AI-Powered Eye Disease Diagnosis</h3><span class="kind">graduation project</span></div>
+        <p class="desc">Designed the full data flow from patient input through preprocessing, model prediction, and report generation for retinal disease detection. Covers login, patient data entry, prediction results, and an automated report agent.</p>
+        <div class="stack"><span>React / TypeScript</span><span>FastAPI</span><span>TensorFlow</span></div>
+        <div class="metric">21 test cases written across all four modules</div>
       </div>
-      <p class="desc">Designed the full data flow from patient input through preprocessing, model prediction, and report generation for retinal disease detection. Covers login, patient data entry, prediction results, and an automated report agent.</p>
-      <div class="stack"><span>React / TypeScript</span><span>FastAPI</span><span>TensorFlow</span></div>
-      <div class="metric">21 test cases written across all four modules</div>
     </div>
 
-    <div class="project">
-      <div class="project-head">
-        <h3>Brain Tumor Classification</h3>
-        <span class="kind">deep learning</span>
+    <div class="project hover-lift">
+      <div class="proj-num">02</div>
+      <div class="project-body">
+        <div class="project-head"><h3>Brain Tumor Classification</h3><span class="kind">deep learning</span></div>
+        <p class="desc">Processed and transformed large medical imaging datasets, then benchmarked five transfer-learning architectures against a published paper (Deepak &amp; Ameer, 2019), with rigorous pipeline validation at each stage.</p>
+        <div class="stack"><span>DenseNet121</span><span>ResNet50</span><span>EfficientNetB0</span><span>MobileNetV2</span><span>InceptionV3</span></div>
+        <div class="metric">Best result: DenseNet121 at ~91.83% accuracy</div>
       </div>
-      <p class="desc">Processed and transformed large medical imaging datasets, then benchmarked five transfer-learning architectures against a published paper (Deepak &amp; Ameer, 2019), with rigorous pipeline validation at each stage.</p>
-      <div class="stack"><span>DenseNet121</span><span>ResNet50</span><span>EfficientNetB0</span><span>MobileNetV2</span><span>InceptionV3</span></div>
-      <div class="metric">Best result: DenseNet121 at ~91.83% accuracy</div>
     </div>
 
-    <div class="project">
-      <div class="project-head">
-        <h3>RAG-Based AI Chatbot</h3>
-        <span class="kind">data integration</span>
+    <div class="project hover-lift">
+      <div class="proj-num">03</div>
+      <div class="project-body">
+        <div class="project-head"><h3>RAG-Based AI Chatbot</h3><span class="kind">data integration</span></div>
+        <p class="desc">Built a retrieval pipeline that integrates external data sources into a structured knowledge base, so the chatbot answers from grounded, retrievable context rather than the model alone.</p>
+        <div class="stack"><span>Retrieval-Augmented Generation</span><span>Python</span></div>
       </div>
-      <p class="desc">Built a retrieval pipeline that integrates external data sources into a structured knowledge base, so the chatbot answers from grounded, retrievable context rather than the model alone.</p>
-      <div class="stack"><span>Retrieval-Augmented Generation</span><span>Python</span></div>
     </div>
 
-    <div class="project">
-      <div class="project-head">
-        <h3>Insulin Prediction System</h3>
-        <span class="kind">healthcare ML</span>
+    <div class="project hover-lift">
+      <div class="proj-num">04</div>
+      <div class="project-body">
+        <div class="project-head"><h3>Insulin Prediction System</h3><span class="kind">healthcare ML</span></div>
+        <p class="desc">Data cleaning, transformation, and feature engineering on healthcare datasets to prepare them for downstream prediction modeling.</p>
+        <div class="stack"><span>Python</span><span>Feature Engineering</span></div>
       </div>
-      <p class="desc">Data cleaning, transformation, and feature engineering on healthcare datasets to prepare them for downstream prediction modeling.</p>
-      <div class="stack"><span>Python</span><span>Feature Engineering</span></div>
     </div>
 
-    <div class="project">
-      <div class="project-head">
-        <h3>Educational Website</h3>
-        <span class="kind">full stack</span>
+    <div class="project hover-lift">
+      <div class="proj-num">05</div>
+      <div class="project-body">
+        <div class="project-head"><h3>Educational Website</h3><span class="kind">full stack</span></div>
+        <p class="desc">Designed the database schema and managed the data flow between frontend and backend for a full-stack educational platform.</p>
+        <div class="stack"><span>Full Stack</span><span>Database Design</span></div>
       </div>
-      <p class="desc">Designed the database schema and managed the data flow between frontend and backend for a full-stack educational platform.</p>
-      <div class="stack"><span>Full Stack</span><span>Database Design</span></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- EDUCATION -->
-  <section id="education">
+<!-- EDUCATION -->
+<section id="education" class="block reveal">
+  <div class="wrap-narrow">
     <div class="section-head"><span class="idx mono">04</span><h2>Education</h2></div>
     <div class="edu-row">
       <div class="left">
@@ -369,10 +463,12 @@
       </div>
       <div class="right">2026</div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CERTIFICATIONS -->
-  <section id="certifications">
+<!-- CERTIFICATIONS -->
+<section id="certifications" class="block reveal">
+  <div class="wrap-narrow">
     <div class="section-head"><span class="idx mono">05</span><h2>Certifications</h2></div>
     <ul class="cert-list">
       <li><span class="cert-name">Data Science and Analysis</span><span class="cert-org">Banha University, 2025</span></li>
@@ -383,25 +479,23 @@
       <li><span class="cert-name">Front-End Development</span><span class="cert-org">Banha University</span></li>
       <li><span class="cert-name">The Green Leap</span><span class="cert-org">CIB Summer Internship, 2025</span></li>
     </ul>
-  </section>
+  </div>
+</section>
 
-  <!-- LANGUAGES -->
-  <section id="languages">
+<!-- LANGUAGES -->
+<section id="languages" class="block reveal">
+  <div class="wrap-narrow">
     <div class="section-head"><span class="idx mono">06</span><h2>Languages</h2></div>
     <div class="lang-row">
-      <div class="lang-item">
-        <div class="lang-name">Arabic</div>
-        <div class="lang-level">native</div>
-      </div>
-      <div class="lang-item">
-        <div class="lang-name">English</div>
-        <div class="lang-level">B2</div>
-      </div>
+      <div class="lang-item"><div class="lang-name">Arabic</div><div class="lang-level">native</div></div>
+      <div class="lang-item"><div class="lang-name">English</div><div class="lang-level">B2</div></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
+<!-- FOOTER -->
+<footer>
+  <div class="wrap-narrow">
     <div class="cta">
       <h2>Looking for a Data Engineer? Let's talk.</h2>
       <div class="links">
@@ -412,9 +506,50 @@
       </div>
     </div>
     <div class="copyline">Youmna Ehab Elshahat Afify — Benha, Egypt</div>
-  </footer>
+  </div>
+</footer>
 
-</div>
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal');
+  if(reduceMotion || !('IntersectionObserver' in window)){
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('is-visible'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  var counters = document.querySelectorAll('.stat-num[data-count]');
+  function animateCount(el){
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    if(isNaN(target)) return;
+    if(reduceMotion){ el.textContent = target; return; }
+    var duration = 900, startTime = null;
+    function step(ts){
+      if(!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      el.textContent = Math.floor(progress * target);
+      if(progress < 1) requestAnimationFrame(step); else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+  if('IntersectionObserver' in window){
+    var statIo = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ animateCount(entry.target); statIo.unobserve(entry.target); }
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function(el){ statIo.observe(el); });
+  } else {
+    counters.forEach(animateCount);
+  }
+})();
+</script>
 
 </body>
 </html>
